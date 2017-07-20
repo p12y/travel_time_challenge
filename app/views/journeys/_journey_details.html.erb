@@ -1,0 +1,6 @@
+<% if @journey.persisted? %>
+  <p>Start: <%= @journey.start %></p>
+  <% @journey.meetings.each do |meeting| %>
+    <p><%= meeting.name %></p>
+  <% end %>
+<% end %>
