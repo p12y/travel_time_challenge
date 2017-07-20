@@ -4,6 +4,10 @@ class JourneysController < ApplicationController
   end
 
   def new
+    @journey = Journey.new
+  end
+
+  def create
   end
 
   def show

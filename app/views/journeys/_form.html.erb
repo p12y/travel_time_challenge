@@ -1,0 +1,17 @@
+<%= form_for @journey do |f| %>
+
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div class="field">
+  <%= f.label :start_time%>
+  <%= f.time_field :start_time %>
+</div>
+
+<h3>Meetings</h3>
+
+<%= f.submit 'Calculate' %>
+
+<% end %>
