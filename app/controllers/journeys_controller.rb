@@ -15,4 +15,5 @@ class JourneysController < ApplicationController
 
   def destroy
   end
+
 end
