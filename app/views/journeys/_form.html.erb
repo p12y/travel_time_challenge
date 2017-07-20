@@ -12,6 +12,17 @@
 
 <h3>Meetings</h3>
 
-<%= f.submit 'Calculate' %>
+<div id="meetings">
+  <%= f.fields_for :meetings do |meeting| %>
+    <%= render 'meeting_fields', f: meeting %>
+  <% end %>
+  <div class="links">
+    <%= link_to_add_association 'Add Meeting', f, :meetings %>
+  </div>
+</div>
+
+<%= f.actions do %>
+  <%= f.submit 'Calculate' %>
+<% end %>
 
 <% end %>

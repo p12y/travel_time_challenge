@@ -16,4 +16,9 @@ class JourneysController < ApplicationController
   def destroy
   end
 
+  private
+    def journey_params
+      params.require(:journey).permit(:name, :start_time, 
+      meetings_attributes: [:id, :postcode, :duration, :name, :_destroy])
+    end
 end
