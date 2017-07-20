@@ -1,0 +1,7 @@
+<h1>Journeys</h1>
+
+<ul>
+<% @journeys.each do |journey| %>
+  <%= link_to journey.name journey_path(journey) %>
+<% end %>
+</ul>
