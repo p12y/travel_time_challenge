@@ -47,9 +47,14 @@ class Meeting < ApplicationRecord
       #end
       
       #@travel_time = @ret["travel_time_minutes"]
-      @travel_time = 10
-      self.arrival_time = @departure_time + @travel_time.minutes
-      self.departure_time = self.duration ? self.arrival_time + self.duration.minutes : self.arrival_time
+      self.travel_time = 10
+
+      self.arrival_time = @departure_time + self.travel_time.minutes
+      self.departure_time = self.arrival_time
+
+      if self.duration
+        self.departure_time += self.duration.minutes
+      end
     end
 
     def get_coord(code)

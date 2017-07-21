@@ -2,8 +2,8 @@
 
 <ul class="list-group">
 <% @journeys.each do |journey| %>
-  <li class="list-group-item"><%= link_to journey.name, edit_journey_path(journey) %> | <%= journey_time(journey) %></li>
+  <li class="list-group-item"><%= link_to journey.name, journey_path(journey) %> | <%= journey_time(journey) %></li>
 <% end %>
 </ul>
 
-<%= link_to 'Add Journey', new_journey_path %>
+<%= link_to 'Add Journey', new_journey_path, class: "btn btn-primary" %>

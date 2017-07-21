@@ -1,8 +1,0 @@
-<h1>Route</h1>
-
-<% if @journey.persisted? %>
-  <p>Start: <%= @journey.start_time.strftime('%I:%M %p') %></p>
-  <% @journey.meetings.order("created_at").each do |meeting| %>
-    <p><%= meeting.name %>: <%= meeting.arrival_time.strftime('%I:%M %p') %></p>
-  <% end %>
-<% end %>

@@ -1,0 +1,21 @@
+<h1>View Journey
+<small><%= @journey.name %></small>
+</h1>
+<%= link_to 'Edit', edit_journey_path(@journey), class: 'btn btn-primary' %>
+<%= link_to 'Back', journeys_path, class: 'btn btn-primary' %>
+
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h2 class="text-success">Start: <%= format_time(@journey.start_time) %></h2>
+    <h2>&#8595;</h2>
+    <% @journey.meetings.order("created_at").each do |meeting| %>
+      <small>
+        <p>Journey time: <%= distance_of_time_in_words(meeting.travel_time.minutes) %></p>
+        <p>Meeting duration: <%= distance_of_time_in_words(meeting.duration.minutes) %></p>
+      </small>
+      <h3><%= meeting.name %>: <%= format_time(meeting.arrival_time) %></h3>
+      <h2>&#8595;</h2>
+    <% end %>
+    <h2 class="text-danger">Total Time: <%= journey_time(@journey) %></h2>
+  </div>
+</div>

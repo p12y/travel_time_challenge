@@ -1,8 +1,11 @@
 class JourneysController < ApplicationController
-  before_action :set_journey, only: [:edit, :update, :destroy]
+  before_action :set_journey, only: [:edit, :show, :update, :destroy]
 
   def index
     @journeys = Journey.all
+  end
+
+  def show
   end
 
   def new
@@ -13,7 +16,7 @@ class JourneysController < ApplicationController
     @journey = Journey.new(journey_params)
     respond_to do |format|
       if @journey.save
-        format.html { redirect_to edit_journey_path(@journey) }
+        format.html { redirect_to journey_path(@journey) }
         flash[:notice] = 'Journey created'
       else
         format.html { render :new }
@@ -32,7 +35,7 @@ class JourneysController < ApplicationController
         # Trigger before_save callbacks to refresh data
         # Need to find a better way as this is an expensive request
         @journey.meetings.update(updated_at: Time.current)
-        format.html { redirect_to edit_journey_path(@journey) }
+        format.html { redirect_to journey_path(@journey) }
         flash[:notice] = 'Journey updated'
       else
         format.html { render :edit }
