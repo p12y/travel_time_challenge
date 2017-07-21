@@ -12,7 +12,7 @@
 
     <div class="form-group">
       <%= f.label :duration %>
-      <%= f.text_field :duration, class: 'form-control' %>
+      <%= f.select :duration, f.object.durations, {}, { class: 'form-control' } %>
     </div>
 
     <%= link_to_remove_association f, class: 'btn btn-default remove-fields' do %>

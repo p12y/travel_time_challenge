@@ -16,6 +16,15 @@ class Meeting < ApplicationRecord
     self.journey.meetings.where("id < ?", self.id).last
   end
 
+  def durations
+    arr = []
+    (0..1435).step(5) do |num|
+      time = Time.at(num * 60).utc.strftime("%H:%M")
+      arr.push([time, num])
+    end
+    arr
+  end
+
   private
 
     def calculate_travel_time
