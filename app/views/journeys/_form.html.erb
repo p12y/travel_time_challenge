@@ -2,7 +2,11 @@
 <h3>Details</h3>
 <div class="well">
   <% if @journey.errors %>
-    <p class="text-danger"><%= @journey.errors.full_messages.to_sentence %></p>
+    <ul>
+      <% @journey.errors.each do |key, error| %>
+        <li class="text-danger"><%= key.to_s.humanize %> <%= error %></li>
+      <% end %>
+    </ul>
   <% end %>
 
 

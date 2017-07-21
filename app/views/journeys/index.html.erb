@@ -1,6 +1,11 @@
 <h1>Journeys</h1>
 
 <ul class="list-group">
+
+<% unless @journeys.any? %>
+<p>You don't have any journeys yet. Click the button below to add one.</p>
+<% end %>
+
 <% @journeys.each do |journey| %>
   <li class="list-group-item"><%= link_to journey.name, journey_path(journey) %> | <%= journey_time(journey) %></li>
 <% end %>

@@ -56,6 +56,6 @@ class JourneysController < ApplicationController
     end
     def journey_params
       params.require(:journey).permit(:name, :start_time, :start_date,
-      meetings_attributes: [:id, :postcode, :duration, :name, :_destroy])
+      meetings_attributes: [:id, :location, :duration, :name, :_destroy])
     end
 end

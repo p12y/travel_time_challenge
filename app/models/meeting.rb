@@ -2,7 +2,7 @@ class Meeting < ApplicationRecord
 
   belongs_to :journey
 
-  validates :postcode, presence: true
+  validates :location, presence: true
   validates_numericality_of :duration, allow_blank: true
   validates :name, presence: true
 
@@ -29,10 +29,10 @@ class Meeting < ApplicationRecord
       @start_coords = '51.5199586,-0.0984249' # Rentify coordinates
       @departure_time = self.journey.start_time
       @start_time = self.journey.start_time
-      @end_coords = get_coord(self.postcode)
+      @end_coords = get_coord(self.location)
 
       if self.previous
-        @start_coords = get_coord(self.previous.postcode)
+        @start_coords = get_coord(self.previous.location)
         @departure_time = self.previous.departure_time
         @start_time = self.previous.departure_time
       end
@@ -62,15 +62,15 @@ class Meeting < ApplicationRecord
       req = Net::HTTP.get(url)
       json = JSON.parse(req)
 
+      # Validate location is a London address
       london = false
       json["results"][0]["address_components"].each do |node|
         if node["long_name"] == "London"
           london = true
         end
       end
-
       if london == false
-        self.journey.errors.add(:location, "Must be a London address")
+        self.journey.errors.add(:location, "must be a London address")
         throw :abort
       end
 

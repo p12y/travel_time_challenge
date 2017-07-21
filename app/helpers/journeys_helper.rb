@@ -4,7 +4,7 @@ module JourneysHelper
     if journey.meetings.any?
       start_time = journey.start_time
       end_time = journey.meetings.last.departure_time
-      ret = distance_of_time_in_words(end_time - start_time)
+      output = distance_of_time_in_words(end_time - start_time)
     end
     output
   end
