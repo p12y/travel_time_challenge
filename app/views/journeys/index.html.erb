@@ -1,8 +1,8 @@
 <h1>Journeys</h1>
 
-<ul>
+<ul class="list-group">
 <% @journeys.each do |journey| %>
-  <%= link_to journey.name, edit_journey_path(journey) %>
+  <li class="list-group-item"><%= link_to journey.name, edit_journey_path(journey) %> | <%= journey_time(journey) %></li>
 <% end %>
 </ul>
 
