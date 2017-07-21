@@ -17,12 +17,12 @@
 
   <div class="form-group">
     <%= f.label :start_time %>
-    <%= f.time_field :start_time, class: 'form-control' %>
+    <%= f.text_field :start_time, class: 'form-control', id: 'departureTime', value: default_time(f.object.start_time) %>
   </div>
 
   <div class="form-group">
     <%= f.label :start_date %>
-    <%= f.text_field :start_date, class: 'form-control', id: 'journeyDate', value: default_date(f.object.start_time) %>
+    <%= f.text_field :start_date, class: 'form-control', id: 'journeyDate', value: default_date(f.object.start_date) %>
   </div>
 </div>
 
