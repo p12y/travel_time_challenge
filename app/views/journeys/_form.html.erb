@@ -1,5 +1,9 @@
 <%= form_for @journey do |f| %>
 
+<% if @journey.errors %>
+  <p><%= @journey.errors.full_messages.to_sentence %></p>
+<% end %>
+
 <div class="field">
   <%= f.label :name %>
   <%= f.text_field :name %>
@@ -18,7 +22,7 @@
 <h3>Meetings</h3>
 
 <div id="meetings">
-  <%= f.fields_for :meetings do |meeting| %>
+  <%= f.fields_for :meetings, f.object.meetings.order(:created_at) do |meeting| %>
     <%= render 'meeting_fields', f: meeting %>
   <% end %>
   <div class="links">

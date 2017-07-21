@@ -29,6 +29,9 @@ class JourneysController < ApplicationController
   def update
     respond_to do |format|
       if @journey.update_attributes(journey_params)
+        # Trigger before_save callbacks to refresh data
+        # Need to find a better way as this is an expensive request
+        @journey.meetings.update(updated_at: Time.current)
         format.html { redirect_to edit_journey_path(@journey) }
         flash[:notice] = 'Journey updated'
       else
