@@ -1,22 +1,25 @@
 <%= form_for @journey do |f| %>
+<h3>Details</h3>
+<div class="well">
+  <% if @journey.errors %>
+    <p><%= @journey.errors.full_messages.to_sentence %></p>
+  <% end %>
 
-<% if @journey.errors %>
-  <p><%= @journey.errors.full_messages.to_sentence %></p>
-<% end %>
 
-<div class="field">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
 
-<div class="field">
-  <%= f.label :start_time %>
-  <%= f.time_field :start_time %>
-</div>
+  <div class="form-group">
+    <%= f.label :start_time %>
+    <%= f.time_field :start_time, class: 'form-control' %>
+  </div>
 
-<div class="field">
-  <%= f.label :start_date %>
-  <%= f.date_field :start_date %>
+  <div class="form-group">
+    <%= f.label :start_date %>
+    <%= f.date_field :start_date, class: 'form-control' %>
+  </div>
 </div>
 
 <h3>Meetings</h3>
@@ -26,10 +29,12 @@
     <%= render 'meeting_fields', f: meeting %>
   <% end %>
   <div class="links">
-    <%= link_to_add_association 'Add Meeting', f, :meetings %>
+    <%= link_to_add_association f, :meetings, class: 'btn btn-primary' do %>
+      Add meeting
+    <% end %>
   </div>
 </div>
 
-<%= f.submit 'Save' %>
+<div class="actions"><%= f.submit 'Save journey', class: 'btn btn-success' %></div>
 
 <% end %>

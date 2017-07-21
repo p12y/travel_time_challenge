@@ -1,20 +1,22 @@
 <div class="nested-fields">
+  <div class="well">
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <div class="form-group">
+      <%= f.label :postcode %>
+      <%= f.text_field :postcode, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :duration %>
+      <%= f.text_field :duration, class: 'form-control' %>
+    </div>
+
+    <%= link_to_remove_association f, class: 'btn btn-danger' do %>
+      Remove meeting
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :postcode %>
-    <%= f.text_field :postcode %>
-  </div>
-
-  <div class="field">
-    <%= f.label :duration %>
-    <%= f.text_field :duration %>
-  </div>
-
-  <%= link_to_remove_association "Remove Meeting", f %>
-
 </div>
