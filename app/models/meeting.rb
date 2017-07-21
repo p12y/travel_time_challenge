@@ -60,8 +60,22 @@ class Meeting < ApplicationRecord
     def get_coord(code)
       url = URI.parse("http://maps.googleapis.com/maps/api/geocode/json?address=#{code}&sensor=false")
       req = Net::HTTP.get(url)
-      lat = JSON.parse(req)["results"][0]["geometry"]["location"]["lat"]
-      lng = JSON.parse(req)["results"][0]["geometry"]["location"]["lng"]
+      json = JSON.parse(req)
+
+      london = false
+      json["results"][0]["address_components"].each do |node|
+        if node["long_name"] == "London"
+          london = true
+        end
+      end
+
+      if london == false
+        self.journey.errors.add(:location, "Must be a London address")
+        throw :abort
+      end
+
+      lat = json["results"][0]["geometry"]["location"]["lat"]
+      lng = json["results"][0]["geometry"]["location"]["lng"]
       coord = "#{lat},#{lng}"
     end
 end
