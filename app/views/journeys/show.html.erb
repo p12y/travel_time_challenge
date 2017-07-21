@@ -13,7 +13,9 @@
         <p>Journey time: <%= distance_of_time_in_words(meeting.travel_time.minutes) %></p>
         <p>Meeting duration: <%= distance_of_time_in_words(meeting.duration.minutes) %></p>
       </small>
-      <h3><%= meeting.name %>: <%= format_time(meeting.arrival_time) %></h3>
+      <h3>Client: <strong><%= meeting.name %></strong>, Location: <strong><%= meeting.location %></strong>,
+      <br>
+      Time: <strong><%= format_time(meeting.arrival_time) %></strong></h3>
       <h2>&#8595;</h2>
     <% end %>
     <h2 class="text-danger">Total Time: <%= journey_time(@journey) %></h2>

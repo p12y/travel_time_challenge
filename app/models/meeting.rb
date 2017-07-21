@@ -5,6 +5,7 @@ class Meeting < ApplicationRecord
   validates :location, presence: true
   validates_numericality_of :duration, allow_blank: true
   validates :name, presence: true
+  validates :duration, presence: true
 
   before_save :calculate_travel_time
 
