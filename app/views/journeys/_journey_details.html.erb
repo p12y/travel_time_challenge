@@ -1,6 +1,6 @@
 <% if @journey.persisted? %>
-  <p>Start: <%= @journey.start_time %></p>
+  <p>Start: <%= @journey.start_time.strftime('%I:%M %p') %></p>
   <% @journey.meetings.each do |meeting| %>
-    <p><%= meeting.name %></p>
+    <p><%= meeting.name %>: <%= meeting_time(start_time: @journey.start_time, travel_time: meeting.travel_time) %></p>
   <% end %>
 <% end %>

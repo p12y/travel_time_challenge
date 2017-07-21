@@ -18,6 +18,7 @@ class JourneysController < ApplicationController
       else
         format.html { render :new }
         flash[:alert] = @journey.errors.full_messages.to_sentence
+        puts @journey.errors.full_messages.to_sentence
       end
     end
   end
