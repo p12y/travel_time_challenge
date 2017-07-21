@@ -17,4 +17,8 @@ module JourneysHelper
   def format_time(time)
     time.strftime('%I:%M %p')
   end
+
+  def default_date(start_time)
+    start_time ? start_time.strftime('%d/%m/%Y') : Time.current.to_date.strftime('%d/%m/%Y')
+  end
 end

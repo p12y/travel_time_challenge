@@ -22,7 +22,7 @@
 
   <div class="form-group">
     <%= f.label :start_date %>
-    <%= f.date_field :start_date, class: 'form-control' %>
+    <%= f.text_field :start_date, class: 'form-control', id: 'journeyDate', value: default_date(f.object.start_time) %>
   </div>
 </div>
 
