@@ -1,24 +1,14 @@
-# README
+## Travel Time Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a solution to the travel time challenge.
 
-Things you may want to cover:
+# How to use
 
-* Ruby version
+Clone the repository, run `bundle install` and `rake db:setup`.
 
-* System dependencies
+Start by adding a journey. Input start information and add any number of meetings. You can set the duration of the meeting in the form.
 
-* Configuration
+# Tests
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To prepare the database run `rake db:migrate RAILS_ENV=test`
+Then, `rspec` 
