@@ -1,8 +1,7 @@
 FactoryGirl.define do
   factory :meeting do
-    location "MyString"
-    name "MyString"
-    journey "MyString"
+    location "Rentify"
+    name "Steve"
     travel_time "2017-07-21 22:27:36"
     duration 1
     arrival_time "2017-07-21 22:27:36"

@@ -1,5 +1,5 @@
 class JourneysController < ApplicationController
-  before_action :set_journey, only: [:edit, :show, :update, :destroy]
+  before_action :set_journey, only: [:edit, :update, :show, :destroy]
 
   def index
     @journeys = Journey.all

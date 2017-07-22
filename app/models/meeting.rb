@@ -31,48 +31,77 @@ class Meeting < ApplicationRecord
     def calculate_travel_time
       # Set id to allow next/previous methods to work if new record
       if Meeting.count != 0
-        id = id || Meeting.last.id + 1
+        self.id = self.id || Meeting.last.id + 1
         else
-        id = 1
+        self.id = 1
       end
 
       @start_coords = '51.5199586,-0.0984249' # Rentify coordinates
       @departure_time = self.journey.start_time
       @start_time = self.journey.start_time
+      @start_date = self.journey.start_date
       @end_coords = get_coord(self.location)
 
+      # Set time & coordinates to previous location
       if self.previous
         @start_coords = get_coord(self.previous.location)
         @departure_time = self.previous.departure_time
         @start_time = self.previous.departure_time
       end
 
-      #@url = URI.parse("https://developer.citymapper.com/api/1/traveltime/?startcoord=#{@start_coords}&endcoord=#{@end_coords}&time=#{@start_time}&time_type=arrival&key=fcb9f0259d60e4b753865645b6f6f36a")
-      #@req = Net::HTTP.get(@url)
-      #@res = JSON.parse(@req)
+      # Combine start_time & start_date - could be handled by gem instead
+      @start_time = Time.parse("#{@start_date.to_s} #{@start_time.to_s}") 
 
-      #if @res["error_message"]
-      #  self.journey.errors.add(:request, @res["error_message"])
-      #  throw :abort
-      #end
+      # Send API request
+      @uri = URI.parse('https://developer.citymapper.com/api/1/traveltime/')
+      @params = { startcoord: @start_coords, endcoord: @end_coords, 
+                  time: @start_time, time_type: 'arrival', 
+                  key: '1a1fb831e477a3b580de248076775e2d' 
+                }
+      @uri.query = URI.encode_www_form(@params)
+      @res = Net::HTTP.get_response(@uri)
+
+      # Return if not a success
+      if !@res.is_a?(Net::HTTPSuccess)
+        self.journey.errors.add(:request, "something went wrong")
+        throw :abort
+      end
+
+      # Parse request
+      @json = JSON.parse(@res.body)
+
+      # Return if API returns error
+      if @json["error_message"]
+        self.journey.errors.add(:request, @json["error_message"])
+        throw :abort
+      end
       
-      #@travel_time = @ret["travel_time_minutes"]
-      self.travel_time = 10
-
+      # Set departure/arrial time and add meeting duration
+      @travel_time = @json["travel_time_minutes"]
+      self.travel_time = @travel_time
       self.arrival_time = @departure_time + self.travel_time.minutes
       self.departure_time = self.arrival_time
-
-      if self.duration
-        self.departure_time += self.duration.minutes
-      end
+      self.departure_time += self.duration.minutes
     end
 
     def get_coord(code)
-      url = URI.parse("http://maps.googleapis.com/maps/api/geocode/json?address=#{code}&sensor=false")
-      req = Net::HTTP.get(url)
-      json = JSON.parse(req)
+      # Ensure location is London
+      code = "#{code}, london"
 
-      # Validate location is a London address
+      # Make API request
+      uri = URI.parse("http://maps.googleapis.com/maps/api/geocode/json")
+      params = { address: code, sensor: false }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
+
+      if res.is_a?(Net::HTTPSuccess)
+        json = JSON.parse(res.body)
+      else
+        self.journey.errors.add(:request, "something went wrong")
+        throw :abort
+      end
+
+      # Validate returned location is a London address
       london = false
       json["results"][0]["address_components"].each do |node|
         if node["long_name"] == "London"
