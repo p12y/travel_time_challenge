@@ -5,10 +5,10 @@ FactoryGirl.define do
     start_date "2017-07-21"
 
     factory :journey_with_meetings do
-      after(:build) { Meeting.skip_callback(:save, :before, :calculate_travel_time) }
+      before(:create) { Meeting.skip_callback(:save, :before, :calculate_travel_time) }
       after(:create) { Meeting.set_callback(:save, :before, :calculate_travel_time) }
-      after(:build) do |journey|
-        2.times { create(:meeting, journey: journey) }
+      before(:create) do |journey|
+        journey.meetings << build_list(:meeting, 2, journey: journey)
       end
     end
   end
